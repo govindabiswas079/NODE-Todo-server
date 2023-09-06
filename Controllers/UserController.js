@@ -13,7 +13,7 @@ export const SignIn = async (req, res, next) => {
                 bcrypt.compare(password, user?.password)
                     .then(passwordCheck => {
                         if (!passwordCheck) return res.status(400).send({ error: "Incorrect Password" });
-                        const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "24hr" });
+                        const token = jwt.sign({ userId: user?._id, email: user?.email }, process.env.JWT_SECRET, { expiresIn: "24hr" });
                         return res.status(200).send({ ...user?._doc, token: token });
                     })
                     .catch(error => {
